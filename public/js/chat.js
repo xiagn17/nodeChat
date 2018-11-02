@@ -13,24 +13,26 @@ popupSubmit.addEventListener('click', function () {
     username = document.body.querySelector('.username').value;
     let form = body.querySelector('.popup');
     let opacity = 'opacityToZero';
+    
+    if (username) {
+        form.classList.add(opacity);
+        let promise = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                form.classList.remove(opacity);
+                resolve('result');
+            }, 1000);
 
-    form.classList.add(opacity);
-    let promise = new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            form.classList.remove(opacity);
-            resolve('result');
-        }, 1000);
+        });
+        promise
+            .then(
+                function (result) {
+                    form.style.display = 'none';
+                    socket.emit('userPlus', username);
+                }
+            );
 
-    });
-    promise
-        .then(
-            function (result) {
-                form.style.display = 'none';
-                socket.emit('userPlus', username);
-            }
-        );
+    }
 
-    // передача через socket на сервер username
 });
 
 socket.on('userPlus', function (username) {
@@ -51,9 +53,11 @@ inputMessage.addEventListener('click', function () {
         message: inputField,
         username: username
     };
-    socket.emit('message', data);
+    if (data.message) {
+        socket.emit('message', data);
 
-    body.querySelector('.input-message').value = '';
+        body.querySelector('.input-message').value = '';
+    }
 });
 
 socket.on('message', function (data) {
