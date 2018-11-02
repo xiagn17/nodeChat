@@ -194,5 +194,26 @@ body {
     width: calc(100% + 30px);
     transform: translateX(-15px);
   }
+  .popup .content {
+    width: 80%;
+  }
+  .popup .content .main {
+    width: 70%;
+  }
+  .popup .content .main button {
+    height: 3rem;
+    width: 6rem;
+  }
+}
+@media (max-width: 400px) {
+  .popup .content {
+    width: 90%;
+  }
+  .popup .content .header {
+    font-size: 1.1rem;
+  }
+  .popup .content .main {
+    width: 80%;
+  }
 }
 /*# sourceMappingURL=style.css.map */
