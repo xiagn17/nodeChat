@@ -1,20 +1,29 @@
-
-
-
-
 const socket = io.connect();
 
 const body = document.body;
 let popupSubmit = body.querySelector('.btn-outline-success');
 
-let username;
+
+
+let usercolor = (function (usercolor) {
+    let a = String(Math.random() * 255);
+    let b = String(Math.random() * 255);
+    let c = String(Math.random() * 255);
+    let rgb = 'rgb(' + a + ', ' + b + ', ' + c + ')';
+    return rgb;
+}());
+let userData = {
+    username: '',
+    usercolor: usercolor
+};
+
 
 popupSubmit.addEventListener('click', function () {
-    username = document.body.querySelector('.username').value;
+    userData.username = document.body.querySelector('.username').value;
     let form = body.querySelector('.popup');
     let opacity = 'opacityToZero';
 
-    if (username) {
+    if (userData.username) {
         form.classList.add(opacity);
         let promise = new Promise(function (resolve, reject) {
             setTimeout(function () {
@@ -27,7 +36,7 @@ popupSubmit.addEventListener('click', function () {
             .then(
                 function (result) {
                     form.style.display = 'none';
-                    socket.emit('userPlus', username);
+                    socket.emit('userPlus', userData);
                 }
             );
 
@@ -35,12 +44,14 @@ popupSubmit.addEventListener('click', function () {
 
 });
 
-socket.on('userPlus', function (username) {
+socket.on('userPlus', function (userData) {
     let onlineList = body.querySelector('.app-window-online-list');
 
     let user = document.createElement('div');
     user.className = 'user';
-    user.innerText = username;
+    user.innerText = userData.username;
+    user.style.color = userData.usercolor;
+
     onlineList.appendChild(user);
 });
 
@@ -49,13 +60,12 @@ let inputMessage = body.querySelector('.btn-submit-message');
 
 inputMessage.addEventListener('click', function () {
     let inputField = body.querySelector('.input-message').value;
-    let data = {
-        message: inputField,
-        username: username
-    };
+
+    let data = userData;
+    data.message = inputField;
+
     if (data.message) {
         socket.emit('message', data);
-
         body.querySelector('.input-message').value = '';
     }
 });
@@ -73,6 +83,7 @@ socket.on('message', function (data) {
 
     text.innerText = data.message;
     name.innerText = data.username;
+    name.style.color = data.usercolor;
     message.appendChild(name);
     message.appendChild(text);
 
@@ -91,10 +102,12 @@ socket.on('connect', function () {
 socket.on('online', function (usernames) {
     let onlineList = body.querySelector('.app-window-online-list');
     onlineList.innerHTML = '';
-    let users = usernames.map(function (username) {
+
+    let users = usernames.map(function (data) {
         let user = document.createElement('div');
         user.className = 'user';
-        user.innerText = username;
+        user.innerText = data.username;
+        user.style.color = data.usercolor;
         return user;
     });
     users.forEach(function (user) {
@@ -103,7 +116,8 @@ socket.on('online', function (usernames) {
 });
 
 window.onunload = function () {
-    socket.emit('deleteUsername', username);
+    socket.emit('deleteUsername', userData);
+    socket.emit('writeLogout', userData);
 };
 
 let textArea = body.querySelector('#textFocus');

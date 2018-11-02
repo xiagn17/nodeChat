@@ -184,6 +184,7 @@ body {
         .user {
           padding-top: 1rem;
           padding-left: 0.4rem;
+          margin-left: 2.5rem;
         }
       }
     }
@@ -197,5 +198,32 @@ body {
       width: calc(100% + 30px);
       transform: translateX(-15px);
     }
+  }
+  .popup {
+    .content {
+      width: 80%;
+      .main {
+        width: 70%;
+        button {
+          height: 3rem;
+          width: 6rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .popup {
+    .content {
+      width: 90%;
+      .header {
+        font-size: 1.1rem;
+      }
+      .main {
+      width: 80%;
+      }
+    }
+
   }
 }

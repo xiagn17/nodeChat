@@ -24,25 +24,29 @@ let onlineUsers = [];
 io.on('connection', function (client) {
     console.log('made socket conection', client.id);
 
-    client.on('userPlus', function (username) {
-        onlineUsers.push(username);
-        io.emit('userPlus', username);
+    client.on('userPlus', function (userData) {
+        onlineUsers.push(userData);
+        io.emit('userPlus', userData);
     });
 
-    client.on('message', function (msg) {
-        io.emit('message', msg);
+    client.on('message', function (data) {
+        io.emit('message', data);
     });
 
     client.on('online', function () {
         io.emit('online', onlineUsers);
     });
 
-    client.on('deleteUsername', function (username) {
+    client.on('deleteUsername', function (userData) {
         onlineUsers.forEach(function (el, index) {
-            if (el === username) {
+            if (el.username === userData.username) {
                 onlineUsers.splice(index, 1);
             }
         });
         io.emit('online', onlineUsers);
     });
+
+    client.on('writeLogout', function (userData) {
+        
+    })
 });
