@@ -1,3 +1,7 @@
+
+
+
+
 const socket = io.connect();
 
 const body = document.body;
@@ -31,31 +35,13 @@ popupSubmit.addEventListener('click', function () {
 
 socket.on('userPlus', function (username) {
     let onlineList = body.querySelector('.app-window-online-list');
+
     let user = document.createElement('div');
     user.className = 'user';
-    user.innerText = String(username);
-
+    user.innerText = username;
     onlineList.appendChild(user);
 });
 
-window.onbeforeunload = function() {
-    return function () {
-        let parent = body.querySelector('.app-window-online-list');
-        let elements = parent.querySelector('.name');
-        let data = {
-            parent: parent,
-            element: function () {
-                elements.forEach(function (el) {
-                    if (el === String(username)){
-                        return el;
-                    }
-                });
-            }()
-        };
-
-        return socket.emit('userMinus', data);
-    }();
-};
 
 let inputMessage = body.querySelector('.btn-submit-message');
 
@@ -76,6 +62,9 @@ socket.on('message', function (data) {
     let text = document.createElement('div');
 
     message.className = 'message rounded';
+    name.className = 'name';
+    text.className = 'text';
+
     text.innerText = data.message;
     name.innerText = data.username;
     message.appendChild(name);
@@ -84,3 +73,27 @@ socket.on('message', function (data) {
     let chat = body.querySelector('.app-window-chat');
     chat.appendChild(message);
 });
+
+
+socket.on('connect', function () {
+    socket.emit('online', {});
+});
+
+
+socket.on('online', function (usernames) {
+    let onlineList = body.querySelector('.app-window-online-list');
+    onlineList.innerHTML = '';
+    let users = usernames.map(function (username) {
+        let user = document.createElement('div');
+        user.className = 'user';
+        user.innerText = username;
+        return user;
+    });
+    users.forEach(function (user) {
+        onlineList.appendChild(user);
+    });
+});
+
+window.onunload = function () {
+    socket.emit('deleteUsername', username);
+};
