@@ -3,7 +3,10 @@ const socket = require('socket.io');
 
 
 const app = express();
-const server = app.listen(4000, function () {
+const port = process.env.PORT || 3000;
+
+
+const server = app.listen(port, function () {
     console.log('index has been started');
 });
 
