@@ -30,6 +30,7 @@ body {
     &-input {
       .flex(flex-start, row);
       input {
+        padding-left: 2rem;
         width: 80%;
         height: 10vh;
         border: 0;
@@ -42,6 +43,7 @@ body {
     &-chat {
       height: 80vh;
       padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
       padding-left: 2rem;
       border-bottom: 1px solid grey;
       overflow: auto;
@@ -94,9 +96,22 @@ body {
         overflow-y: auto;
         height: calc(100% - 4rem);
         .user {
+          position: relative;
           padding-top: 1.5rem;
           padding-left: 0.5rem;
+          margin-left: 1rem;
           font-size: 1.2rem;
+          &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 0.5rem;
+            height: 0.5rem;
+            background: black;
+            border-radius: 50%;
+            bottom: 0.6rem;
+            left: -1rem;
+          }
         }
       }
     }

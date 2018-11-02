@@ -13,7 +13,7 @@ popupSubmit.addEventListener('click', function () {
     username = document.body.querySelector('.username').value;
     let form = body.querySelector('.popup');
     let opacity = 'opacityToZero';
-    
+
     if (username) {
         form.classList.add(opacity);
         let promise = new Promise(function (resolve, reject) {
@@ -60,6 +60,8 @@ inputMessage.addEventListener('click', function () {
     }
 });
 
+
+
 socket.on('message', function (data) {
     let message = document.createElement('div');
     let name = document.createElement('div');
@@ -76,6 +78,8 @@ socket.on('message', function (data) {
 
     let chat = body.querySelector('.app-window-chat');
     chat.appendChild(message);
+
+    chat.scrollTop = chat.scrollHeight;
 });
 
 
@@ -100,4 +104,15 @@ socket.on('online', function (usernames) {
 
 window.onunload = function () {
     socket.emit('deleteUsername', username);
+};
+
+let textArea = body.querySelector('#textFocus');
+textArea.onfocus = function () {
+    this.addEventListener('keyup', function (e) {
+        e = e || window.event;
+        if (e.keyCode === 13) {
+            inputMessage.click();
+            this.focus();
+        }
+    });
 };
