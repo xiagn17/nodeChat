@@ -20,4 +20,14 @@ const io = socket(server);
 
 io.on('connection', function (socket) {
     console.log('made socket conection', socket.id);
+
+
+    socket.on('userPlus', function (username) {
+        io.emit('userPlus', username);
+    });
+
+
+    socket.on('message', function (msg) {
+        io.emit('message', msg);
+    })
 });

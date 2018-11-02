@@ -9,11 +9,41 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 
-
+    <link rel="stylesheet" href="css/style.css">
     <title>Title</title>
 </head>
 <body>
-    Ты крутой
+
+<div class="app">
+    <div class="container">
+        <div class="row app-window">
+            <div class="col-4">
+                <div class="app-window-online">
+                    <div class="app-window-online-header">Online now:</div>
+                    <div class="app-window-online-list"></div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="app-window-chat"></div>
+                <div class="app-window-input">
+                    <input type="text" class="input-message" placeholder="Send the message...">
+                    <button type="button" class="btn btn-submit-message">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="popup">
+    <div class="content">
+        <div class="header">Please, enter your name:</div>
+        <div class="main">
+            <input type="text" class="form-control username" placeholder="username" aria-describedby="basic-addon2">
+            <button type="button" class="btn btn-outline-success">Submit</button>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript" src="js/chat.js"></script>
 </body>
