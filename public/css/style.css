@@ -164,4 +164,35 @@ body {
   animation-name: opacityToZero;
   animation-fill-mode: forwards;
 }
+@media (max-width: 768px) {
+  .app {
+    margin-top: 0;
+  }
+  .app-window-online {
+    height: 30vh;
+    border-right: 0;
+    width: calc(100% + 30px);
+  }
+  .app-window-online-header {
+    font-size: 1.6rem;
+    width: 100%;
+  }
+  .app-window-online-list {
+    transform: translateX(-15px);
+  }
+  .app-window-online-list .user {
+    padding-top: 1rem;
+    padding-left: 0.4rem;
+  }
+  .app-window-chat {
+    border-top: 1px solid grey;
+    width: calc(100% + 30px);
+    transform: translateX(-15px);
+    height: 60vh;
+  }
+  .app-window-input {
+    width: calc(100% + 30px);
+    transform: translateX(-15px);
+  }
+}
 /*# sourceMappingURL=style.css.map */
