@@ -1,4 +1,4 @@
-const socket = io.connect('http://localhost:3000');
+const socket = io.connect();
 
 const body = document.body;
 let popupSubmit = body.querySelector('.btn-outline-success');
