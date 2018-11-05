@@ -6,28 +6,33 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 
-    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/style.min.css">
     <title>Title</title>
 </head>
 <body>
 
 <div class="app">
-    <div class="container">
-        <div class="row app-window">
-            <div class="col-md-4 col-sm-12">
+    <div class="container no-gutter">
+        <div class="row app-window no-gutter no-margin">
+            <div class="col-md-4 col-sm-12 no-gutter no-margin">
                 <div class="app-window-online">
                     <div class="app-window-online-header">Online now:</div>
                     <div class="app-window-online-list"></div>
                 </div>
             </div>
-            <div class="col-md-8 col-sm-12">
+            <div class="col-md-8 col-sm-12 no-gutter no-margin">
                 <div class="app-window-chat"></div>
                 <div class="app-window-input">
-                    <input type="text" class="input-message" placeholder="Send the message..." id="textFocus">
-                    <button type="button" class="btn btn-submit-message">Submit</button>
+                    <input type="text" class="input-message" placeholder="Send the message..." id="textFocus" required>
+                    <a class="btn-submit-message">
+                        <i class="fas fa-paper-plane"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -39,7 +44,7 @@
     <div class="content">
         <div class="header">Please, enter your name:</div>
         <div class="main">
-            <input type="text" class="form-control username" placeholder="username" aria-describedby="basic-addon2">
+            <input type="text" class="form-control username" placeholder="letters && nums only" aria-describedby="basic-addon2">
             <button type="button" class="btn btn-outline-success">Submit</button>
         </div>
     </div>

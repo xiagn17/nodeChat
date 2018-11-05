@@ -1,5 +1,6 @@
 const express = require('express');
 const socket = require('socket.io');
+const fs = require('fs');
 
 
 const app = express();
@@ -19,13 +20,15 @@ app.use(express.static('public'));
 const io = socket(server);
 
 
-let onlineUsers = [];
-
 io.on('connection', function (client) {
     console.log('made socket conection', client.id);
+    io.emit('online', JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8')));
 
     client.on('userPlus', function (userData) {
-        onlineUsers.push(userData);
+        let online = JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8'));
+        online.push(userData);
+        fs.writeFileSync('public/server/onlineUsers.json', JSON.stringify(online));
+
         io.emit('userPlus', userData);
     });
 
@@ -34,19 +37,19 @@ io.on('connection', function (client) {
     });
 
     client.on('online', function () {
-        io.emit('online', onlineUsers);
+        io.emit('online', JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8')));
     });
 
     client.on('deleteUsername', function (userData) {
-        onlineUsers.forEach(function (el, index) {
-            if (el.username === userData.username) {
-                onlineUsers.splice(index, 1);
+        let online = JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8'));
+
+        online.forEach(function (onlineUser, index) {
+            if (onlineUser.username === userData.username) {
+                online.splice(index, 1);
             }
         });
-        io.emit('online', onlineUsers);
-    });
 
-    client.on('writeLogout', function (userData) {
-        
-    })
+        fs.writeFileSync('public/server/onlineUsers.json', JSON.stringify(online));
+        io.emit('writeLogout', userData.username);
+    });
 });

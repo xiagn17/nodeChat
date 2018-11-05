@@ -4,44 +4,65 @@
   margin: 0;
   padding: 0;
 }
+.no-gutter {
+  padding: 0;
+}
+.no-margin {
+  margin: 0;
+}
 body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 16px;
 }
 .app {
-  margin-top: 3rem;
+  margin-top: calc(5vh - 2px);
 }
 .app-window {
   background: white;
-  border: 2px solid grey;
+  border: 2.1px solid grey;
 }
 .app-window-input,
 .app-window-chat {
-  width: calc(100% + 45px);
-  transform: translateX(-30px);
+  width: 100%;
 }
 .app-window-input {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
-}
-.app-window-input input {
-  padding-left: 2rem;
-  width: 80%;
   height: 10vh;
-  border: 0;
+}
+.app-window-input .input-message {
+  padding-left: 2rem;
+  width: 100%;
+  border: none;
+  height: 100%;
+  outline: none;
 }
 .app-window-input .btn-submit-message {
-  width: 20%;
-  height: 10vh;
+  display: block;
+  width: 7rem;
+  height: 100%;
+  padding: 0;
+  border: none;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.app-window-input .btn-submit-message .fa-paper-plane {
+  font-size: 2rem;
+  transition: 0.35s;
+  perspective: 1000;
 }
 .app-window-chat {
   height: 80vh;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  padding-left: 2rem;
+  padding: 1.5rem 2rem;
   border-bottom: 1px solid grey;
   overflow: auto;
 }
@@ -52,12 +73,13 @@ body {
   flex-direction: column;
   padding: 1rem;
   padding-top: 0.6rem;
-  background: lightseagreen;
+  background: #eae2de;
   max-width: 60%;
 }
 .app-window-chat .message .name {
   border-bottom: 1px dashed grey;
   font-size: 0.8rem;
+  font-weight: 600;
 }
 .app-window-chat .message .text {
   padding-top: 0.5rem;
@@ -76,6 +98,24 @@ body {
   left: -0.6rem;
   border-top-left-radius: 100%;
 }
+.app-window-chat .wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+}
+.app-window-chat .wrapper .logOut {
+  width: max-content;
+  background: #BC8F8F;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  float: right;
+  margin-top: 0.5rem;
+}
+.app-window-chat .wrapper .logOut span {
+  font-style: italic;
+}
 .app-window-online {
   height: 90vh;
   border-right: 1px solid grey;
@@ -83,8 +123,7 @@ body {
 .app-window-online-header {
   border-bottom: 1px solid grey;
   height: 4rem;
-  width: calc(100% + 15px);
-  transform: translateX(-15px);
+  width: 100%;
   text-align: center;
   line-height: 4rem;
   font-size: 2rem;
@@ -92,14 +131,13 @@ body {
 }
 .app-window-online-list {
   overflow-y: auto;
+  padding: 1rem 3.5rem;
   height: calc(100% - 4rem);
 }
 .app-window-online-list .user {
   position: relative;
-  padding-top: 1.5rem;
-  padding-left: 0.5rem;
-  margin-left: 1rem;
   font-size: 1.2rem;
+  margin: 0.8rem 0;
 }
 .app-window-online-list .user::before {
   content: '';
@@ -148,6 +186,9 @@ body {
   align-items: center;
   flex-direction: column;
 }
+.popup .content .main .form-control::placeholder {
+  text-align: center;
+}
 .popup .content .main .btn-outline-success {
   margin-top: 2rem;
 }
@@ -168,32 +209,35 @@ body {
   .app {
     margin-top: 0;
   }
+  .app-window {
+    border: 3.1px solid grey;
+  }
   .app-window-online {
     height: 30vh;
     border-right: 0;
-    width: calc(100% + 30px);
+    width: 100%;
   }
   .app-window-online-header {
     font-size: 1.6rem;
     width: 100%;
   }
   .app-window-online-list {
-    transform: translateX(-15px);
-  }
-  .app-window-online-list .user {
-    padding-top: 1rem;
-    padding-left: 0.4rem;
-    margin-left: 2.5rem;
+    padding-top: 0.5rem;
   }
   .app-window-chat {
     border-top: 1px solid grey;
-    width: calc(100% + 30px);
-    transform: translateX(-15px);
+    width: 100% ;
     height: 60vh;
   }
+  .app-window-chat .message {
+    max-width: 80%;
+  }
   .app-window-input {
-    width: calc(100% + 30px);
-    transform: translateX(-15px);
+    width: 100%;
+    height: calc(10vh - 6.2px);
+  }
+  .app-window-input .input-message {
+    padding-left: 1.5rem;
   }
   .popup .content {
     width: 80%;
@@ -207,6 +251,15 @@ body {
   }
 }
 @media (max-width: 400px) {
+  .app-window-input .input-message {
+    padding-left: 1rem;
+  }
+  .app-window-input .btn-submit-message {
+    width: 5.5rem;
+  }
+  .app-window-input .btn-submit-message .fa-paper-plane {
+    font-size: 1.5rem;
+  }
   .popup .content {
     width: 90%;
   }
