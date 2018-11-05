@@ -24,6 +24,12 @@ popupSubmit.addEventListener('click', function () {
     let opacity = 'opacityToZero';
 
     let valueName = body.querySelector('.username').value;
+
+    let regSymbols = /[[\\^$.|?*+()]+/;
+    if (valueName.search(regSymbols) !== -1) {
+        alert('Forbidden symbol: ' + valueName.match(regSymbols)[0]);
+        return false;
+    }
     if (valueName) {
         this.disabled = true;
         form.classList.add(opacity);
