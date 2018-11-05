@@ -82,6 +82,7 @@ body {
   font-weight: 600;
 }
 .app-window-chat .message .text {
+  overflow: auto;
   padding-top: 0.5rem;
 }
 .app-window-chat .message:not(:nth-child(1)) {
