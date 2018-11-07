@@ -65,6 +65,17 @@ body {
   padding: 1.5rem 2rem;
   border-bottom: 1px solid grey;
   overflow: auto;
+  position: relative;
+}
+.app-window-chat .typing {
+  z-index: 9;
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+  padding: 0 2rem;
+}
+.app-window-chat .typing .users {
+  display: inline-block;
 }
 .app-window-chat .message {
   position: relative;
@@ -236,6 +247,9 @@ body {
   .app-window-input {
     width: 100%;
     height: calc(10vh - 6.2px);
+  }
+  .app-window-input .typing {
+    padding: 0 1rem;
   }
   .app-window-input .input-message {
     padding-left: 1.5rem;

@@ -66,6 +66,17 @@ body {
       padding: 1.5rem 2rem;
       border-bottom: 1px solid grey;
       overflow: auto;
+      position: relative;
+      .typing {
+        z-index: 9;
+        position: absolute;
+        left: 0;
+        bottom: 1px;
+        padding: 0 2rem;
+        .users {
+          display: inline-block;
+        }
+    }
       .message {
         position: relative;
         display: flex;
@@ -231,6 +242,9 @@ body {
       &-input {
         width: 100%;
         height: calc(10vh - 6.2px);
+        .typing {
+          padding: 0 1rem;
+        }
         .input-message {
           padding-left: 1.5rem;
         }

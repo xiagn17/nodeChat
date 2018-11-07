@@ -40,6 +40,10 @@ io.on('connection', function (client) {
         io.emit('online', JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8')));
     });
 
+    client.on('typing', function (userData) {
+        io.emit('typing', userData);
+    });
+
     client.on('deleteUsername', function (userData) {
         let online = JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8'));
 
