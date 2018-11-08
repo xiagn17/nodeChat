@@ -47,7 +47,7 @@ io.on('connection', function (client) {
     });
 
 
-    client.on('disconnect', function () {
+    client.on('disconnect', function (reason) {
         let online = JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8'));
         let userData = online[client.id];
         if (userData){
@@ -56,7 +56,6 @@ io.on('connection', function (client) {
 
             io.emit('writeLogout', userData.username);
         }
-
     });
 
 });

@@ -167,7 +167,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         let newEl = event.target;
-        console.log(chat.scrollTop + newEl.clientHeight + 20 ,'--------', chat.scrollHeight - chat.clientHeight)
         if (chat.scrollTop + newEl.clientHeight + 20 > chat.scrollHeight - chat.clientHeight)
             chat.scrollTop = chat.scrollHeight;
 
@@ -304,6 +303,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     socket.on('writeLogout', function (username) {
+        if (username === userData.username)
+            location.reload();
+
         let wrapper = document.createElement('div');
         let logOutDiv = document.createElement('div');
 
@@ -324,6 +326,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let slider = body.querySelector('.slide');
         slider.classList.toggle('slide-active');
-    })
+    });
+
 
 });
+
+
