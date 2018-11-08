@@ -70,15 +70,11 @@ document.addEventListener("DOMContentLoaded", function() {
                             onlineSimilar.main = valueName;
                     }
 
-
-                    if (onlineSimilar.length === 0){
-                        if (onlineSimilar.main)
-                            userData.username = onlineSimilar.main + '(' + '1' + ')';
-                        else
-                            userData.username = valueName;
-                    }
                     if (!onlineSimilar.main)
                         userData.username = valueName;
+                    else if (onlineSimilar.length === 0){
+                        userData.username = onlineSimilar.main + '(' + '1' + ')';
+                    }
                     else {
                         let curPos = 0;
                         let lengthMain = Number(valueName.length);
@@ -164,13 +160,16 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     let chat = body.querySelector('.app-window-chat');
-    chat.addEventListener('DOMNodeInserted', function () {
+    chat.addEventListener('DOMNodeInserted', function (event) {
         if (body.querySelector('.typing')) {
             let typing = body.querySelector('.typing');
             typing.style.top = String(chat.scrollHeight - 25) + 'px';
         }
 
-        chat.scrollTop = chat.scrollHeight;
+        let newEl = event.target;
+        console.log(chat.scrollTop + newEl.clientHeight + 20 ,'--------', chat.scrollHeight - chat.clientHeight)
+        if (chat.scrollTop + newEl.clientHeight + 20 > chat.scrollHeight - chat.clientHeight)
+            chat.scrollTop = chat.scrollHeight;
 
     });
 
@@ -206,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 var users = document.createElement('div');
 
                 users.className = 'users';
-                users.innerText = Data.username;
+                users.textContent = Data.username;
                 typing.innerHTML = users.outerHTML + ' is typing...';
                 typing.className = 'typing';
 
@@ -236,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let user = document.createElement('div');
 
         user.className = 'user';
-        user.innerText = userData.username;
+        user.textContent = userData.username;
         user.style.color = userData.usercolor;
 
         logOutDiv.className = 'logOut';
@@ -246,9 +245,13 @@ document.addEventListener("DOMContentLoaded", function() {
         wrapper.appendChild(logOutDiv);
 
         chat.appendChild(wrapper);
-        chat.scrollTop = chat.scrollHeight;
 
-        let onlineList = body.querySelector('.app-window-online-list');
+        let onlineList;
+        if (document.documentElement.clientWidth < 576)
+            onlineList = body.querySelector('.slide-online .app-window-online-list');
+        else
+            onlineList = body.querySelector('.app-window-online-list');
+
         onlineList.appendChild(user);
     });
 
@@ -260,11 +263,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
         name.className = 'name';
-        name.innerText = data.username;
+        name.textContent = data.username;
         name.style.color = data.usercolor;
 
         text.className = 'text';
-        text.innerText = data.message;
+        text.textContent = data.message;
 
         message.appendChild(name);
         message.appendChild(text);
@@ -275,7 +278,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     socket.on('online', function (userDatas) {
-        let onlineList = body.querySelector('.app-window-online-list');
+        let onlineList;
+        if (document.documentElement.clientWidth < 576)
+            onlineList = body.querySelector('.slide-online .app-window-online-list');
+        else
+            onlineList = body.querySelector('.app-window-online-list');
+
         onlineList.innerHTML = '';
 
         if (JSON.stringify(userDatas) === '{}')
@@ -285,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function() {
         for (let key in userDatas) {
             let user = document.createElement('div');
             user.className = 'user';
-            user.innerText = userDatas[key].username;
+            user.textContent = userDatas[key].username;
             user.style.color = userDatas[key].usercolor;
             users.push(user);
         }
@@ -309,6 +317,13 @@ document.addEventListener("DOMContentLoaded", function() {
         socket.emit('online');
     });
 
+    let slideBtn = body.querySelector('a.slide-btn');
+    slideBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        this.classList.toggle('slide-btn-active');
 
+        let slider = body.querySelector('.slide');
+        slider.classList.toggle('slide-active');
+    })
 
 });

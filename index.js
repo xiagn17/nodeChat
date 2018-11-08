@@ -19,11 +19,11 @@ app.use(express.static('public'));
 //socket setup
 const io = socket(server);
 
-let usersTime = {};
 
 io.on('connection', function (client) {
     console.log('made socket conection', client.id);
     io.emit('online', JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8')));
+
 
     client.on('userPlus', function (userData) {
         let online = JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8'));
@@ -32,6 +32,7 @@ io.on('connection', function (client) {
 
         io.emit('userPlus', userData);
     });
+
 
     client.on('message', function (data) {
         io.emit('message', data);
@@ -42,15 +43,9 @@ io.on('connection', function (client) {
     });
 
     client.on('typing', function (userData) {
-        /*if (!usersTime.hasOwnProperty(userData.username)){
-            userData.time = 500;
-            usersTime[userData.username] = userData;
-        }
-        else {
-
-        }*/
         io.emit('typing', userData);
     });
+
 
     client.on('disconnect', function () {
         let online = JSON.parse(fs.readFileSync('public/server/onlineUsers.json', 'utf8'));

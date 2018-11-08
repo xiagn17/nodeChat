@@ -204,6 +204,9 @@ body {
 .popup .content .main .btn-outline-success {
   margin-top: 2rem;
 }
+.slide {
+  display: none;
+}
 @keyframes opacityToZero {
   from {
     opacity: 1;
@@ -239,14 +242,14 @@ body {
   .app-window-chat {
     border-top: 1px solid grey;
     width: 100% ;
-    height: 60vh;
+    height: calc(100vh - 3rem - 6.2px);
   }
   .app-window-chat .message {
     max-width: 80%;
   }
   .app-window-input {
     width: 100%;
-    height: calc(10vh - 6.2px);
+    height: 3rem;
   }
   .app-window-input .typing {
     padding: 0 1rem;
@@ -263,6 +266,69 @@ body {
   .popup .content .main button {
     height: 3rem;
     width: 6rem;
+  }
+}
+@media (max-width: 576px) {
+  .slide {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transform: translateX(100%);
+    transition: 0.3s;
+    background: white;
+  }
+  .slide-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: transparent;
+    position: absolute;
+    top: 1rem;
+    left: -4rem;
+    transition: 0.1s;
+  }
+  .slide-btn span {
+    display: block;
+    background: grey;
+    width: 2rem;
+    height: 1.5px;
+  }
+  .slide-btn span::before,
+  .slide-btn span::after {
+    display: block;
+    content: '';
+    height: 1.5px;
+    width: 2rem;
+    background: grey;
+    position: absolute;
+    transition: 0.5s;
+  }
+  .slide-btn span::before {
+    transform: translateY(-0.35rem);
+  }
+  .slide-btn span::after {
+    transform: translateY(0.35rem);
+  }
+  .slide-btn-active {
+    top: 0.6rem;
+    left: 1rem;
+  }
+  .slide-online {
+    height: 100%;
+    width: 100%;
+  }
+  .slide-active {
+    transform: translateX(0);
+  }
+  .app-window-online {
+    height: 100%;
   }
 }
 @media (max-width: 400px) {

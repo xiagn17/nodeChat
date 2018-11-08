@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.min.css">
 
     <title>Node chat</title>
     <link rel="shortcut icon" href="http://s1.iconbird.com/ico/2013/9/452/w512h4481380476691bubble.png" type="image/png">
@@ -22,7 +22,7 @@
 <div class="app">
     <div class="container no-gutter">
         <div class="row app-window no-gutter no-margin">
-            <div class="col-md-4 col-sm-12 no-gutter no-margin">
+            <div class="col-md-4 d-none d-sm-block col-sm-12 no-gutter no-margin">
                 <div class="app-window-online">
                     <div class="app-window-online-header">Online now:</div>
                     <div class="app-window-online-list"></div>
@@ -41,6 +41,17 @@
     </div>
 </div>
 
+<div class="slide">
+    <a href="#" class="slide-btn">
+        <span></span>
+    </a>
+    <div class="slide-online">
+        <div class="app-window-online">
+            <div class="app-window-online-header">Online now:</div>
+            <div class="app-window-online-list"></div>
+        </div>
+    </div>
+</div>
 
 <div class="popup">
     <div class="content">
@@ -52,6 +63,6 @@
     </div>
 </div>
 
-<script type="text/javascript" src="js/chat.js"></script>
+<script type="text/javascript" src="js/chat.min.js"></script>
 </body>
 </html>
