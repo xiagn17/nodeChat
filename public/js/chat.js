@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function() {
     const socket = io.connect();
     const body = document.body;
 
@@ -12,8 +12,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }());
     let userData = {
         username: '',
-        usercolor: usercolor,
-        typingTime: 0
+        usercolor: usercolor
     };
 
 
@@ -32,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
         if (valueName) {
             this.disabled = true;
-            let online = [], onlineSimilar = [];
+            let online, onlineSimilar = [];
 
             form.classList.add(opacity);
 
@@ -60,17 +59,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
             getJson()
                 .then(function (online) {
-                    let main = undefined;
 
-                    onlineSimilar = online.filter(function (user) {
+                    for (let key in online) {
                         let reg = new RegExp('^' + valueName + '\\(' + '\\d+' + '\\)$' );
-                        if (user.username.search(reg) !== -1)
-                            return user;
-                        else if (user.username === valueName)
-                            main = valueName;
-                    });
-                    if (main !== undefined)
-                        onlineSimilar.main = main;
+                        let client = online[key];
+
+                        if (client.username.search(reg) !== -1)
+                            onlineSimilar.push(client);
+                        else if (client.username === valueName)
+                            onlineSimilar.main = valueName;
+                    }
 
 
                     if (onlineSimilar.length === 0){
@@ -202,27 +200,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
             return -1;
         }
 
+        if (userData.username !== Data.username) {
+            if (!body.querySelector('.typing')){
+                var typing = document.createElement('div');
+                var users = document.createElement('div');
 
-        if (!body.querySelector('.typing')){
-            var typing = document.createElement('div');
-            var users = document.createElement('div');
+                users.className = 'users';
+                users.innerText = Data.username;
+                typing.innerHTML = users.outerHTML + ' is typing...';
+                typing.className = 'typing';
 
-            users.className = 'users';
-            users.innerText = Data.username;
-            typing.innerHTML = users.outerHTML + ' is typing...';
-            typing.className = 'typing';
+                chat.appendChild(typing);
 
-            chat.appendChild(typing);
-            setTimeout(function () {
-                chat.removeChild(typing);
-            }, 2000)
-
-
-        }
-        else {
-            users = body.querySelector('.users');
-            if (search(users.textContent, Data.username) === -1) {
-                users.innerHTML += ', ' + Data.username;
+                setTimeout(function () {
+                    chat.removeChild(typing);
+                }, 2000)
+            }
+            else {
+                users = body.querySelector('.users');
+                if (search(users.textContent, Data.username) === -1) {
+                    var pos = users.textContent.length;
+                    users.innerHTML += ', ' + Data.username;
+                }
+                setTimeout(function () {
+                    let str = users.textContent;
+                    str.slice(0, pos);
+                }, 2000);
             }
         }
     });
@@ -242,7 +245,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         wrapper.className = 'wrapper';
         wrapper.appendChild(logOutDiv);
 
-        let chat = body.querySelector('.app-window-chat');
         chat.appendChild(wrapper);
         chat.scrollTop = chat.scrollHeight;
 
@@ -272,17 +274,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 
 
-    socket.on('online', function (usernames) {
+    socket.on('online', function (userDatas) {
         let onlineList = body.querySelector('.app-window-online-list');
         onlineList.innerHTML = '';
 
-        let users = usernames.map(function (data) {
+        if (JSON.stringify(userDatas) === '{}')
+            return true;
+
+        let users = [];
+        for (let key in userDatas) {
             let user = document.createElement('div');
             user.className = 'user';
-            user.innerText = data.username;
-            user.style.color = data.usercolor;
-            return user;
-        });
+            user.innerText = userDatas[key].username;
+            user.style.color = userDatas[key].usercolor;
+            users.push(user);
+        }
+
         users.forEach(function (user) {
             onlineList.appendChild(user);
         });
@@ -301,10 +308,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         socket.emit('online');
     });
-
-    window.onunload = function () {
-        socket.emit('deleteUsername', userData);
-    };
 
 
 
